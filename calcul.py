@@ -45,13 +45,15 @@ calcul_point()
 les_choix.sort_values('total', ascending=False, inplace=True)
 sommaire = les_choix.groupby(['pooler']).sum()
 sommaire.sort_values('total',ascending=False,inplace=True)
+sommaire_joueur = les_choix.groupby(['pooler', 'nom']).sum()
+sommaire_joueur.sort_values(['pooler','total'], ascending=False, inplace=True)
 
 #une routine pour combiner les résultats du pool dans un seul fichier excel
 with pd.ExcelWriter('classement.xlsx') as writer:  
     sommaire.to_excel(writer, sheet_name='classement')
     les_choix.to_excel(writer, sheet_name='pointage')
     stats.to_excel(writer, sheet_name='stat_detail')
-les_choix.to_html('./templates/pointage.html')
+sommaire_joueur.to_html('./templates/pointage.html')
 #sommaire.to_html('./templates/classement.html')
 
 print(sommaire)

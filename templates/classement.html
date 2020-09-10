@@ -1,0 +1,33 @@
+
+{%  extends 'base.html' %}
+
+{% block content %}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>but</th>
+      <th>passe</th>
+      <th>total</th>
+    </tr>
+    <tr>
+      <th>pooler</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% for player in total['but'] %}
+    <tr>
+      <th><a href='/classement/{{ player }}'>{{ player }}</a></th>
+      <td>{{ total['but'][player] }}</td>
+      <td>{{ total['passe'][player] }}</td>
+      <td>{{ total['total'][player] }}</td>
+    </tr>
+    {% endfor %}
+    
+  </tbody>
+</table>
+{% endblock %}

@@ -3,16 +3,21 @@
 from flask import Flask, render_template, request, url_for, jsonify
 from http import HTTPStatus
 from calcul import les_choix, sommaire
+import runpy
 
 app = Flask(__name__)
 
 total = sommaire.to_dict()
+chat_box = []
 
 
-
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
-	return render_template('index.html')
+	runpy.run_path('calcul.py')
+	if len(request.form) > 0:
+		chat_box.append(request.form['chat'])
+	
+	return render_template('index.html', chat_box=chat_box)
 
 
 @app.route("/classement", methods=['GET', 'POST'])
@@ -39,7 +44,7 @@ def get_pooler_point(pooler_name):
 	return jsonify(pooler_complet)
 
 
-
-
 if __name__ == '__main__':
 	app.run()
+
+
